@@ -1,0 +1,141 @@
+class No:
+    def __init__(self, identificador, nome, nota):
+        self.identificador = identificador
+        self.nome = nome
+        self.nota = nota
+        self.proximo = None
+        self.anterior = None
+
+def menu ():
+    print("1 - Inserir aluno")
+    print("2 - Listar aluno")
+    print("3 - Remover aluno")
+    print("4 - Buscar aluno")
+    print("5 - Listar situação de todos os alunos")
+    print("6 - Sair")
+    opcao = int(input("Digite sua opcao:"))
+    return opcao
+
+
+def inserir (lista,identificador, nome, nota):
+    novo = No(identificador, nome, nota)
+
+    if lista is None:
+        return novo
+    atual = lista
+    while atual.proximo is not None:
+        atual = atual.proximo
+
+    atual.proximo = novo
+    novo.anterior = atual
+    return lista
+
+def listar(lista):
+    atual = lista
+
+    if atual is None:
+        print("Lista vazia")
+        return
+
+    while atual is not None:
+        print("Identidade:", atual.identificador)
+        print("Nome:", atual.nome)
+        print("Nota:", atual.nota)
+
+        atual = atual.proximo
+
+def buscar (lista, identificador):
+    atual = lista
+
+    while atual is not None:
+        if atual.identificador == identificador :
+            return atual
+
+        atual = atual.proximo
+
+    return None
+
+def remover (lista, identificador):
+    atual = buscar(lista, identificador)
+
+    if atual is None:
+        print("Aluno não encontrado")
+        return lista
+    
+    elif atual.anterior is None:
+        lista = atual.proximo
+
+        if lista is not None:
+            lista.anterior = None
+    else:
+        atual.anterior.proximo = atual.proximo
+
+        if atual.proximo is not None:
+            atual.proximo.anterior = atual.anterior
+
+    return lista
+
+def situacao (lista):
+    atual = lista
+
+    if atual is None:
+        print("Lista vazia")
+        return
+    
+    while atual is not None:
+        print("Aluno:", atual.nome)
+        print("Nota:", atual.nota)
+
+        if atual.nota >= 7:
+            print("Aprovado")
+        elif atual.nota >= 4:
+            print("Exame")
+        else:
+            print("Reprovado")
+
+        atual = atual.proximo
+
+def main():
+    lista = None
+    opcao = 0
+
+    while opcao != 6:
+        opcao = menu ()
+
+        if opcao == 1:
+            identificador = int(input("Digite o ID:"))
+            nome = input("Digite o nome:")
+            nota = int(input("Digite a nota:"))
+
+            lista = inserir(lista, identificador, nome, nota)
+            print("Cadastro concluído")
+
+        elif opcao == 2:
+            listar (lista)
+
+        elif opcao == 3:
+            identificador = int(input("Digite o ID:"))
+            lista = remover (lista, identificador)
+
+        elif opcao == 4:
+            identificador = int(input("Digite o ID:"))
+            aluno = buscar(lista, identificador)
+
+            if aluno is None:
+                print("Aluno não encontrado")
+            else:
+                print("ID:", aluno.identificador)
+                print("Nome:", aluno.nome)
+                print("Nota:", aluno.nota)
+
+        elif opcao == 5:
+            situacao (lista)
+
+        elif opcao == 6:
+            print("Encerrado")
+
+        else:
+            print("Erro, tente novamente")
+
+main()
+        
