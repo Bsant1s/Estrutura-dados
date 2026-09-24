@@ -10,14 +10,14 @@ class ListaDuplamenteEncadeada:
         self.inicio = None
 
     def adicionar_inicio(self, nome):
-        novo = NoDuplo(nome)
+        no = NoDuplo(nome)
 
         if self.inicio is None:
-            self.inicio = novo
+            self.inicio = no
         else:
-            novo.proximo = self.inicio
-            self.inicio.anterior = novo
-            self.inicio = novo
+            no.proximo = self.inicio
+            self.inicio.anterior = no
+            self.inicio = no
 
     def percorrer_frente(self):
         aux = self.inicio
@@ -41,7 +41,7 @@ def main():
     lista = ListaDuplamenteEncadeada()
 
     lista.adicionar_inicio("Patrícia")
-    lista.adicionar_inicio("Elizanete")
+    lista.adicionar_inicio("Elizabete")
     lista.adicionar_inicio("Carol")
     lista.adicionar_inicio("Fabiana")
 
